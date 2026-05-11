@@ -1,16 +1,28 @@
+import os
 from package.mercado import Mercado
 from package.produto import Produto
 from package.cliente import Cliente
 
-def exibir_menu():
+def limpar_tela():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
-    print("\n" + "="*10)
+def exibir_menu(cliente_logado = None):
+
+    if cliente_logado != None:
+        print(f"\n >> Logado. Olá, {cliente_logado.nome} <<")
+        status = '(acesso liberado)'
+    else:
+        print("\n >> Visitante <<")
+        status = '(entre para logar)'
+    print("\n" + " = "*15)
     print(" WELCOME AO MERCADINHO ")
-    print("="*10)
+    print(" = "*15)
     print("1 - Cadastrar Produto")
     print("2 - Cadastrar Cliente")
     print("3 - Listar Produtos")
-    print("4 - Comprar Produto")
+    print(f"4 - Modo Compra {status}")
+    print("5 - Finalizar Compra")
+    print("6 - Deslogar conta")
     print("0 - Sair")
 
     return input("Escolha uma opção: ")
@@ -21,14 +33,21 @@ def main():
     cliente_logado = None
 
     while True:
+        limpar_tela()
+        opcao = exibir_menu(cliente_logado)
 
-        opcao = exibir_menu()
+        if opcao == '0':
+            limpar_tela()
+            print("\n Saindo ...")
+            break
+
+        limpar_tela()
 
 # # # # # # # # # # # # # # # # # # # # # # # #
 #                                             #
 #           TELA DE CADASTRAR PRODUTO         #
 #                                             #
-# # # # # # # # ## # # # # # # ## # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # #
         if opcao == '1':
             print("\n -- CADASTRANDO PRODUTO --")
             print("\n Digite: ")
@@ -47,7 +66,7 @@ def main():
 #                                             #
 #           TELA DE CADASTRAR CLIENTE         #
 #                                             #
-# # # # # # # # ## # # # # # # ## # # # # # # #
+# # # # # # # # # # # # # # # # # # # # # # # #
         elif opcao == '2':
             print("\n -- CADASTRANDO CLIENTE --")
             print("\n Digite: ")
@@ -86,7 +105,7 @@ def main():
         elif opcao == '4':
 
             if cliente_logado == None:
-
+                print(">>> Usuário não logado <<<")
                 print(' -- TELA DE LOGIN --')
                 cpf_digitado = input("Digite seu CPF para login: ")
 
@@ -133,18 +152,32 @@ def main():
                 else: 
                     print("Produto não encontrado no estoque")
 
+        elif opcao == '5':
+            if cliente_logado != None:
+                cliente_logado.carrinho.exibir_itens()
 
-# # # # # # # # # # # # # # # # # # # # # # # #
-#                                             #
-#                   SAINDO                    #
-#                                             #
-# # # # # # # # ## # # # # # # ## # # # # # # # 
-        elif opcao == '0':
-            print("\n Saindo ...")
-            break
+                valor_total = cliente_logado.carrinho.calcular_total()
+
+                print(f"Total da compra: R$: {valor_total}")
+                finalizar = input("Deseja confirmar pagamento? (S/N)")
+
+                if finalizar == 'S':
+                    cliente_logado.carrinho.limpar_carrinho()
+                    print("Compra realizada.")
+                
+            else:
+                print("Necessário estar logado")
+
+        elif opcao == '6':
+            cliente_logado = None
+
+            print("Perfil deslogado com sucesso!")
 
         else:
             print("Opção invalida. Tente Novamente")
+
+        print("\n" + "="*30)
+        input("Pressione Enter para voltar ao menu...")
 
 if __name__ == "__main__":
     main()
