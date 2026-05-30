@@ -42,7 +42,7 @@ python --version
 Para testar todas as funcionalidades desenvolvidas nesta primeira entrega, siga este fluxo no menu principal:
 
 1. **Cadastrar Produto (`Opção 1`)**:
-   * Adicione alguns produtos ao estoque (ex: Maçã, R$ 2.50, Quantidade: 50).
+   * Adicione alguns produtos ao estoque (ex: nome: Maçã, preço: 2.50, Quantidade: 50).
 2. **Listar Produtos (`Opção 3`)**:
    * Verifique se o produto que você cadastrou aparece na lista com o estoque correto.
 3. **Cadastrar Cliente (`Opção 2`)**:
