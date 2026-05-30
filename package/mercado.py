@@ -6,16 +6,22 @@ class Mercado():
         self.lista_produtos = lista_produtos
         self.lista_clientes = lista_clientes
 
-    def login(self, email, senha):
-        pass
-
     def cadastrar_produto(self, produto):
-
+        for prod in self.lista_produtos:
+            if prod.nome == produto.nome:
+                print(f"Produto já existe na lista!")
+                return False
+            
         self.lista_produtos.append(produto)
+        return True
 
     def cadastrar_cliente(self, cliente):
+        for cli in self.lista_clientes:
+            if cli.get_cpf() == cliente.get_cpf():
+                print(f"Cliente já existe na lista!")
+                return False
+            
         self.lista_clientes.append(cliente)
-        
-    def realizar_pagamento(self, Cliente):
-        pass
+        return True
+
 

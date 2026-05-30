@@ -58,10 +58,10 @@ def main():
 
             novo_produto = Produto(1, nome, preco, qtd_estoque)
 
-            my_mercado.cadastrar_produto(novo_produto)
-
-            print("Produto cadastrado com sucesso")
-
+            if my_mercado.cadastrar_produto(novo_produto):
+                print("Produto cadastrado com sucesso")
+            else:
+                print(". . .")
 # # # # # # # # # # # # # # # # # # # # # # # #
 #                                             #
 #           TELA DE CADASTRAR CLIENTE         #
@@ -78,10 +78,10 @@ def main():
 
             novo_cliente = Cliente(1, nome, cpf, email, idade)
 
-            my_mercado.cadastrar_cliente(novo_cliente)
-
-            print("Cliente cadastrado com sucesso")
-
+            if my_mercado.cadastrar_cliente(novo_cliente):
+                print("Cliente cadastrado com sucesso")
+            else:
+                print(". . .")
 
 # # # # # # # # # # # # # # # # # # # # # # # #
 #                                             #
