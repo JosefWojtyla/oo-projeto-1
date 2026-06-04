@@ -9,7 +9,7 @@ def limpar_tela():
 def exibir_menu(cliente_logado = None):
 
     if cliente_logado != None:
-        print(f"\n >> Logado. Olá, {cliente_logado.nome} <<")
+        print(f"\n >> Logado. Olá, {cliente_logado.get_nome()} <<")
         status = '(acesso liberado)'
     else:
         print("\n >> Visitante <<")
@@ -110,16 +110,16 @@ def main():
                 cpf_digitado = input("Digite seu CPF para login: ")
 
                 for cli in my_mercado.lista_clientes:
-                    if cli.cpf == cpf_digitado:
+                    if cli.get_cpf() == cpf_digitado:
                         cliente_logado = cli
-                        print(f"Bem vindo, {cli.nome}!")
+                        print(f"Bem vindo, {cli.get_nome()}!")
                         break
                 
                 else: 
                     print("Cliente não encontrado. Faça o cadastro primeiro.")
 
             else:
-                print(f"Iniciando compra para: {cliente_logado.nome}")
+                print(f"Iniciando compra para: {cliente_logado.get_nome()}")
 
                 print("\n -- PRODUTOS DISPONÍVEIS --")
 

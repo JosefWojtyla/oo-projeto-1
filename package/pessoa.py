@@ -10,6 +10,9 @@ class Pessoa(ABC):
         self.email = email
         self.idade = idade
 
+    def get_nome(self):
+        return self._nome
+        
     def get_cpf(self):
         return self.__cpf
 

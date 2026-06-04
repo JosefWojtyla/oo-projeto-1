@@ -24,4 +24,11 @@ class Mercado():
         self.lista_clientes.append(cliente)
         return True
 
+    # dependencia
+    def emitir_recibo(self, cliente):
+        print("=== RECIBO ===")
+        print(f"Cliente : {cliente.get_nome()}")
+        print("")
+
+
 
