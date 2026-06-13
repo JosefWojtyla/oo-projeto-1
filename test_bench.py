@@ -16,7 +16,7 @@ mercado.cadastrar_cliente(cli1)
 cli1.exibir_dados()
 print("\n")
 
-cli1.carrinho.adicionar_carrinho(prod1, 1)
+cli1.carrinho.adicionar_carrinho(prod2, 1)
 cli1.carrinho.exibir_itens()
 print(cli1.carrinho.calcular_total())
 

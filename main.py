@@ -23,6 +23,7 @@ def exibir_menu(cliente_logado = None):
     print(f"4 - Modo Compra {status}")
     print("5 - Finalizar Compra")
     print("6 - Deslogar conta")
+    print("7 - Listar Clientes")
     print("0 - Sair")
 
     return input("Escolha uma opção: ")
@@ -124,33 +125,35 @@ def main():
                 print("\n -- PRODUTOS DISPONÍVEIS --")
 
                 for prod in my_mercado.lista_produtos:
-
                     if prod.get_estoque() > 0:
                         print("-" * 15)
                         prod.exibir_produto()
-                
-                        print("-" * 15)
+
+                print("-" * 15)
 
                 produto_desejado = input("\nDigite o nome do produto que deseja comprar: ")
                 
-                print("-"*15)
+                produto_encontrado = False
                 for prod in my_mercado.lista_produtos:
-                            if produto_desejado.lower() == prod.nome.lower():
-                                print(f"\n{prod.nome} custa R${prod.get_preco()}")
+                    if produto_desejado.lower() == prod.nome.lower():
+                        produto_encontrado = True
+                        print(f"\n{prod.nome} custa R$ {prod.get_preco():.2f}")
 
-                                qtd_desejada = int(input("\nQuantidade desejada"))
+                        qtd_desejada = int(input("Quantidade desejada: "))
 
-                                if qtd_desejada <= prod.get_estoque():
+                        if qtd_desejada <= 0:
+                            print("Quantidade inválida. Informe um valor maior que zero.")
+                        elif qtd_desejada <= prod.get_estoque():
+                            prod.descontar_estoque(qtd_desejada)
+                            cliente_logado.carrinho.adicionar_carrinho(prod, qtd_desejada)
+                            print("\nProduto adicionado ao carrinho com sucesso!")
+                        else:
+                            print(f"Estoque insuficiente. Temos apenas {prod.get_estoque()} unidade(s).")
 
-                                    prod.descontar_estoque(qtd_desejada)
-                                    cliente_logado.carrinho.adicionar_carrinho(prod, qtd_desejada)
-                                    print("\nProduto adicionado ao carrinho com sucesso!")
-                                else:
-                                    print(f"Estoque insuficiente. Temos apenas {prod.get_estoque()} unidades.")
+                        break
 
-                                break
-                else: 
-                    print("Produto não encontrado no estoque")
+                if not produto_encontrado:
+                    print("Produto não encontrado no estoque.")
 
         elif opcao == '5':
             if cliente_logado != None:
@@ -170,11 +173,19 @@ def main():
 
         elif opcao == '6':
             cliente_logado = None
-
             print("Perfil deslogado com sucesso!")
 
+        elif opcao == '7':
+            print("\n -- CLIENTES CADASTRADOS --")
+            if not my_mercado.lista_clientes:
+                print("Nenhum cliente cadastrado.")
+            else:
+                for cli in my_mercado.lista_clientes:
+                    print("=" * 20)
+                    cli.exibir_dados()
+
         else:
-            print("Opção invalida. Tente Novamente")
+            print("Opção inválida. Tente Novamente")
 
         print("\n" + "="*30)
         input("Pressione Enter para voltar ao menu...")
