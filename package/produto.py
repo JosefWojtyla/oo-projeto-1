@@ -1,3 +1,5 @@
+import json
+
 class Produto():
 
     def __init__(self, id_produto, nome, preco, qtd_estoque):
@@ -22,4 +24,10 @@ class Produto():
     def get_estoque(self):
         return self.__qtd_estoque
 
-    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "preco": self.get_preco(),
+            "qtd_estoque": self.get_estoque()
+        }

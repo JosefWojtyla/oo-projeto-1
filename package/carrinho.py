@@ -24,3 +24,18 @@ class Carrinho():
     def limpar_carrinho(self):
         self.lista_itens = []
         self.total = 0.0
+
+    def to_dict(self):
+        itens_formatados = []
+
+        for produto, quantidade in self.lista_itens:
+
+            itens_formatados.append({
+                "produto": produto.to_dict(),
+                "quantidade": quantidade
+            })
+        
+        return {
+            "itens": itens_formatados,
+            "total": self.total
+        }

@@ -19,5 +19,14 @@ class Cliente(Pessoa):
         print(f"Idade: {self.idade}")
         print(f"Saldo: {self.get_saldo()}")
 
-
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nome": self.get_nome(),
+            "cpf": self.get_cpf(),
+            "email": self.email,
+            "idade": self.idade,
+            "saldo": self.get_saldo(),
+            "carrinho": self.carrinho.to_dict()
+        }
     
