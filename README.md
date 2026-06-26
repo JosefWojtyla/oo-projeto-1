@@ -1,8 +1,8 @@
 # Projeto inicial de Mercadinho (POO-1)
 
-Este é um sistema de simulação de um Mercadinho desenvolvido em **Python**, construído puramente no terminal, focando nos conceitos de **Programação Orientada a Objetos (POO)**. 
+Este é um sistema de simulação de um Mercadinho desenvolvido em **Python**, construído puramente no terminal, focando nos conceitos de **Programação Orientada a Objetos (POO)** e **Persistência de Dados**. 
 
-O projeto aplica na prática conceitos como Classes, Objetos, Herança, Encapsulamento e relacionamentos entre classes (Cliente, Produto, Carrinho e Mercado).
+O projeto aplica na prática conceitos como Classes, Objetos, Herança, Encapsulamento, relacionamentos entre classes (Cliente, Produto, Carrinho e Mercado) e manipulação de arquivos JSON.
 
 ---
 
@@ -55,6 +55,8 @@ Para testar todas as funcionalidades desenvolvidas nesta primeira entrega, siga 
    * Veja o extrato completo do seu carrinho e confirme o pagamento.
 6. **Deslogar (`Opção 6`)**:
    * Saia da conta para permitir que outro visitante utilize o terminal do mercado.
+7. **Testar Persistência (`Opção 0`)**:
+   * Saia do sistema e inicie novamente (`python main.py`). Suas contas, produtos e itens no carrinho continuarão lá, salvos no arquivo JSON!
 
 ---
 
@@ -67,6 +69,9 @@ O sistema foi estruturado da seguinte maneira para facilitar a manutenção e le
   * `pessoa.py` e `cliente.py`: Representação dos usuários do sistema com Herança.
   * `produto.py`: Representação dos itens do mercado.
   * `carrinho.py`: Classe responsável por calcular o subtotal e agregar itens de uma compra.
+* `persistencia/`:
+  * `gerenciador_persistencia.py`: Classe responsável por salvar (serializar) e carregar (desserializar) o estado do mercado em formato JSON.
+  * `persistencia.json`: Banco de dados em formato de texto onde as informações repousam enquanto o sistema está desligado.
 
 ---
-*Desenvolvido para a Entrega 1 da disciplina de Orientação a Objetos.*
+*Desenvolvido para a disciplina de Orientação a Objetos.*
