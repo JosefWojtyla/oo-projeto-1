@@ -1,2 +1,40 @@
-
-
+{
+    "produtos": [
+        {
+            "id": 1,
+            "nome": "Arroz",
+            "preco": 25.0,
+            "qtd_estoque": 148
+        },
+        {
+            "id": 1,
+            "nome": "arroz",
+            "preco": 20.0,
+            "qtd_estoque": 150
+        }
+    ],
+    "clientes": [
+        {
+            "id": 1,
+            "nome": "Josef",
+            "cpf": "123456789",
+            "email": "josef@email.com",
+            "idade": 19,
+            "saldo": 0.0,
+            "carrinho": {
+                "itens": [
+                    {
+                        "produto": {
+                            "id": 1,
+                            "nome": "Arroz",
+                            "preco": 25.0,
+                            "qtd_estoque": 148
+                        },
+                        "quantidade": 2
+                    }
+                ],
+                "total": 50.0
+            }
+        }
+    ]
+}

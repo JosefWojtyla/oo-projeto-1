@@ -36,6 +36,8 @@ def main():
 
     gerenciador = GerenciadorPersistencia()
 
+    gerenciador.carregar_dados(my_mercado)
+
     while True:
         limpar_tela()
         opcao = exibir_menu(cliente_logado)

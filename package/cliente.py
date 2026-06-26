@@ -11,6 +11,9 @@ class Cliente(Pessoa):
     def get_saldo(self):
         return self.__saldo
 
+    def set_saldo(self, valor):
+        self.__saldo = valor
+        
     def exibir_dados(self):
         print("\n= = = DADOS CLIENTE = = =")
         print(f"Nome: {self.get_nome()}")
