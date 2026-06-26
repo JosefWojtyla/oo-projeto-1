@@ -2,6 +2,7 @@ import os
 from package.mercado import Mercado
 from package.produto import Produto
 from package.cliente import Cliente
+from persistencia.gerenciador_persistencia import GerenciadorPersistencia
 
 def limpar_tela():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -33,6 +34,8 @@ def main():
     my_mercado = Mercado(lista_produtos = [], lista_clientes = [])
     cliente_logado = None
 
+    gerenciador = GerenciadorPersistencia()
+
     while True:
         limpar_tela()
         opcao = exibir_menu(cliente_logado)
@@ -60,6 +63,8 @@ def main():
             novo_produto = Produto(1, nome, preco, qtd_estoque)
 
             if my_mercado.cadastrar_produto(novo_produto):
+                gerenciador.salvar_dados(my_mercado)
+
                 print("Produto cadastrado com sucesso")
             else:
                 print(". . .")
@@ -80,6 +85,7 @@ def main():
             novo_cliente = Cliente(1, nome, cpf, email, idade)
 
             if my_mercado.cadastrar_cliente(novo_cliente):
+                gerenciador.salvar_dados(my_mercado)
                 print("Cliente cadastrado com sucesso")
             else:
                 print(". . .")
@@ -146,6 +152,7 @@ def main():
                         elif qtd_desejada <= prod.get_estoque():
                             prod.descontar_estoque(qtd_desejada)
                             cliente_logado.carrinho.adicionar_carrinho(prod, qtd_desejada)
+                            gerenciador.salvar_dados(my_mercado)
                             print("\nProduto adicionado ao carrinho com sucesso!")
                         else:
                             print(f"Estoque insuficiente. Temos apenas {prod.get_estoque()} unidade(s).")
@@ -166,6 +173,7 @@ def main():
 
                 if finalizar == 'S':
                     cliente_logado.carrinho.limpar_carrinho()
+                    gerenciador.salvar_dados(my_mercado)
                     print("Compra realizada.")
                 
             else:
