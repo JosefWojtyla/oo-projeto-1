@@ -56,6 +56,9 @@ class App(tk.Tk):
             bg = "#1e1e2e",
         ).pack(pady = (0, 20))
 
+#-----------------------------------------------------------------------------
+#        Campos da tela de cadastro de produto:
+#-----------------------------------------------------------------------------
         # Campo: Nome do Produto
         tk.Label(frame, text="Nome:", font=("Arial", 12), fg="#cdd6f4", bg="#1e1e2e").pack()
         entrada_nome = tk.Entry(frame, font=("Arial", 12), width=30)
@@ -92,15 +95,113 @@ class App(tk.Tk):
 
         self.trocar_tela(self.frame_menu, frame)
 
+
+
             
     def abrir_cadastro_cliente(self):
         print("Abrindo cadastro de cliente...")
+    
+        frame = tk.Frame(self, bg = "#1e1e2e")
+
+        # titulo
+        tk.Label(
+            frame, text = "Cadastrar Cliente",
+            font = ("Arial", 24, "bold"),
+            fg = "#cdd6f4",
+            bg = "#1e1e2e",
+        ).pack(pady = (0, 20))
+#-----------------------------------------------------------------------------
+#        Campos da tela de cadastro de cliente:
+#-----------------------------------------------------------------------------
+        # nome
+        tk.Label(frame, text="Nome:", font=("Arial", 12), fg="#cdd6f4", bg="#1e1e2e").pack()
+        entrada_nome = tk.Entry(frame, font=("Arial", 12), width=30)
+        entrada_nome.pack(pady=(0, 10))
+
+        # cpf
+        tk.Label(frame, text="CPF:", font=("Arial", 12), fg="#cdd6f4", bg="#1e1e2e").pack()
+        entrada_cpf = tk.Entry(frame, font=("Arial", 12), width=30)
+        entrada_cpf.pack(pady=(0, 10))
+
+        # email
+        tk.Label(frame, text="Email:", font=("Arial", 12), fg="#cdd6f4", bg="#1e1e2e").pack()
+        entrada_email = tk.Entry(frame, font=("Arial", 12), width=30)
+        entrada_email.pack(pady=(0, 10))
+        
+        # idade
+        tk.Label(frame, text="Idade:", font=("Arial", 12), fg="#cdd6f4", bg="#1e1e2e").pack()
+        entrada_idade = tk.Entry(frame, font=("Arial", 12), width=30)
+        entrada_idade.pack(pady=(0, 10))
+
+        # botao cadastrar
+        tk.Button(
+            frame, text="Cadastrar", font=("Arial", 13),
+            bg="#a6e3a1", fg="#1e1e2e",    # cor verde para o botao
+            width=20,
+            command=lambda: print(f"Nome: {entrada_nome.get()}, CPF: {entrada_cpf.get()}, Email: {entrada_email.get()}, Idade: {entrada_idade.get()}")
+        ).pack(pady=10)
+
+        # botao voltar
+        tk.Button(
+            frame, text="← Voltar", font=("Arial", 11),
+            bg="#313244", fg="#cdd6f4",
+            command=lambda: self.trocar_tela(frame, self.frame_menu)  # volta pro menu
+        ).pack()
+
+        self.trocar_tela(self.frame_menu, frame)
 
     def abrir_lista_produtos(self):
         print("Abrindo lista de produtos...")
 
+        frame = tk.Frame(self, bg="#1e1e2e")
+
+        tk.Label(
+            frame, text="Produtos disponiveis",
+            font=("Arial", 20, "bold"), fg="#cdd6f4", bg="#1e1e2e"
+        ).pack(pady=(0, 20)) 
+
+# - - - LISTA DE PRODUTOS - - - 
+
+        label_vazio = tk.Label(
+            frame, text = "Nenhum produto cadastrado",
+            font=("Arial", 12), fg="#a6adc8", bg="#1e1e2e"
+        )
+        label_vazio.pack(pady=20)
+
+        # botao voltar
+        tk.Button(
+            frame, text="← Voltar", font=("Arial", 11),
+            bg="#313244", fg="#cdd6f4",
+            command=lambda: self.trocar_tela(frame, self.frame_menu)
+        ).pack()
+        self.trocar_tela(self.frame_menu, frame)
+
+
     def abrir_lista_clientes(self):
         print("Abrindo lista de clientes...")
+
+        frame = tk.Frame(self, bg="#1e1e2e")
+
+        tk.Label(
+            frame, text="Clientes cadastrados",
+            font=("Arial", 20, "bold"), fg="#cdd6f4", bg="#1e1e2e"
+        ).pack(pady=(0, 20)) 
+
+# - - - LISTA DE CLIENTES - - - 
+
+        label_vazio = tk.Label(
+            frame, text = "Nenhum cliente cadastrado",
+            font=("Arial", 12), fg="#a6adc8", bg="#1e1e2e"
+        )
+        label_vazio.pack(pady=20)
+
+        # botao voltar
+        tk.Button(
+            frame, text="← Voltar", font=("Arial", 11),
+            bg="#313244", fg="#cdd6f4",
+            command=lambda: self.trocar_tela(frame, self.frame_menu)
+        ).pack()
+        self.trocar_tela(self.frame_menu, frame)
 
     def abrir_venda(self):
         print("Abrindo venda...")
