@@ -1,0 +1,42 @@
+{
+    "produtos": [
+        {
+            "id": 1,
+            "nome": "Arroz",
+            "preco": 20.0,
+            "qtd_estoque": 100
+        },
+        {
+            "id": 1,
+            "nome": "Feij\u00e3o",
+            "preco": 8.0,
+            "qtd_estoque": 50
+        }
+    ],
+    "clientes": [
+        {
+            "id": 1,
+            "nome": "Josef",
+            "cpf": "123456789",
+            "email": "josef@email",
+            "idade": 19,
+            "saldo": 0.0,
+            "carrinho": {
+                "itens": [],
+                "total": 0.0
+            }
+        },
+        {
+            "id": 1,
+            "nome": "Eduardinho",
+            "cpf": "987654321",
+            "email": "edardo@email",
+            "idade": 18,
+            "saldo": 0.0,
+            "carrinho": {
+                "itens": [],
+                "total": 0.0
+            }
+        }
+    ]
+}

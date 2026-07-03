@@ -1,5 +1,11 @@
 import tkinter as tk
 
+from package.cliente import Cliente
+from package.produto import Produto
+from package.mercado import Mercado
+
+from persistencia.gerenciador_persistencia import GerenciadorPersistencia
+
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -8,6 +14,11 @@ class App(tk.Tk):
         self.geometry("800x600")
         self.configure(bg="#1e1e2e")
 
+        # dados do mercado
+        self.mercado = Mercado(lista_produtos=[], lista_clientes=[])
+        self.gerenciador = GerenciadorPersistencia()
+        
+        self.gerenciador.carregar_dados(self.mercado)
         # frame do menu principal
         self.frame_menu = tk.Frame(self, bg="#1e1e2e")
         self.frame_menu.pack(expand = True)
@@ -83,7 +94,7 @@ class App(tk.Tk):
             frame, text="Cadastrar", font=("Arial", 13),
             bg="#a6e3a1", fg="#1e1e2e",    # cor verde para o botao
             width=20,
-            command=lambda: print(f"Nome: {entrada_nome.get()}, Preço: {entrada_preco.get()}, Estoque: {entrada_estoque.get()}")
+            command=lambda: self._cadastrar_produtos(entrada_nome, entrada_preco, entrada_estoque, label_erro, frame)
         ).pack(pady=10)
 
         # botao voltar
@@ -95,7 +106,40 @@ class App(tk.Tk):
 
         self.trocar_tela(self.frame_menu, frame)
 
+    def _cadastrar_produtos(self, entrada_nome, entrada_preco, entrada_estoque, label_erro, frame):
+        nome = entrada_nome.get()
+        preco = entrada_preco.get()
+        estoque = entrada_estoque.get()
+        
+        # validação
+        if not nome or not preco or not estoque:
+            label_erro.config(text="Preencha todos os campos", fg="#f38ba8")
+            return
+        
+        try:
+            preco_float = float(preco)
+            estoque_int = int(estoque)
+        
+        except ValueError:
+            label_erro.config(text="Preço ou estoque inválido",fg="#f38ba8")
+            return
 
+        # valores positivos
+        if preco_float <= 0 or estoque_int <= 0:
+            label_erro.config(text = "Valores devem ser maiores que zero", fg="#f38ba8")
+            return 
+        
+        novo_produto = Produto(1, nome, preco_float, estoque_int)
+
+            
+        if self.mercado.cadastrar_produto(novo_produto):
+            self.gerenciador.salvar_dados(self.mercado)
+            label_erro.config(text = "Produto cadastrado", fg="#a6e3a1")
+            entrada_nome.delete(0, tk.END)
+            entrada_preco.delete(0, tk.END)
+            entrada_estoque.delete(0, tk.END)
+        else:
+            label_erro.config(text="Erro: Produto já cadastrado", fg="#f38ba8")
 
             
     def abrir_cadastro_cliente(self):
@@ -133,12 +177,16 @@ class App(tk.Tk):
         entrada_idade = tk.Entry(frame, font=("Arial", 12), width=30)
         entrada_idade.pack(pady=(0, 10))
 
+        # Label de erro (começa vazio, aparece vermelho se algo der errado)
+        label_erro = tk.Label(frame, text="", font=("Arial", 11), fg="#f38ba8", bg="#1e1e2e")
+        label_erro.pack()
+        
         # botao cadastrar
         tk.Button(
             frame, text="Cadastrar", font=("Arial", 13),
             bg="#a6e3a1", fg="#1e1e2e",    # cor verde para o botao
             width=20,
-            command=lambda: print(f"Nome: {entrada_nome.get()}, CPF: {entrada_cpf.get()}, Email: {entrada_email.get()}, Idade: {entrada_idade.get()}")
+            command=lambda: self._cadastrar_cliente(entrada_nome, entrada_cpf, entrada_email, entrada_idade, label_erro, frame)
         ).pack(pady=10)
 
         # botao voltar
@@ -150,6 +198,41 @@ class App(tk.Tk):
 
         self.trocar_tela(self.frame_menu, frame)
 
+    def _cadastrar_cliente(self, entrada_nome, entrada_cpf, entrada_email, entrada_idade, label_erro, frame):
+        nome = entrada_nome.get()
+        cpf = entrada_cpf.get()
+        email = entrada_email.get()
+        idade = entrada_idade.get()
+        
+        # validação
+        if not nome or not cpf or not email or not idade:
+            label_erro.config(text="Preencha todos os campos", fg="#f38ba8")
+            return
+        
+        try:
+            idade_int = int(idade)
+        
+        except ValueError:
+            label_erro.config(text="Idade inválida",fg="#f38ba8")
+            return
+
+        # valores positivos
+        if idade_int <= 0:
+            label_erro.config(text = "Idade deve ser maior que zero", fg="#f38ba8")
+            return 
+        
+        novo_cliente = Cliente(1, nome, cpf, email, idade_int)
+            
+        if self.mercado.cadastrar_cliente(novo_cliente):
+            self.gerenciador.salvar_dados(self.mercado)
+            label_erro.config(text = "Cliente cadastrado", fg="#a6e3a1")
+            entrada_nome.delete(0, tk.END)
+            entrada_cpf.delete(0, tk.END)
+            entrada_email.delete(0, tk.END)
+            entrada_idade.delete(0, tk.END)
+        else:
+            label_erro.config(text="Erro: Cliente já cadastrado", fg="#f38ba8")
+
     def abrir_lista_produtos(self):
         print("Abrindo lista de produtos...")
 
@@ -160,13 +243,27 @@ class App(tk.Tk):
             font=("Arial", 20, "bold"), fg="#cdd6f4", bg="#1e1e2e"
         ).pack(pady=(0, 20)) 
 
-# - - - LISTA DE PRODUTOS - - - 
+# - - - LISTA DE PRODUTOS - - -
+        if not self.mercado.lista_produtos:
+            label_vazio = tk.Label(
+                frame, text = "Nenhum produto cadastrado",
+                font=("Arial", 12), fg="#a6adc8", bg="#1e1e2e"
+            )
+            label_vazio.pack(pady=20)
 
-        label_vazio = tk.Label(
-            frame, text = "Nenhum produto cadastrado",
-            font=("Arial", 12), fg="#a6adc8", bg="#1e1e2e"
-        )
-        label_vazio.pack(pady=20)
+        else:
+            for prod in self.mercado.lista_produtos:
+                # frame pra cada produto
+                frame_prod = tk.Frame(frame, bg="#1e1e2e")
+                frame_prod.pack(pady=5)
+
+                # nome
+                tk.Label(frame_prod, text=f"Nome: {prod.nome}", font=("Arial", 12), fg="#cdd6f4", bg="#1e1e2e").pack()
+
+                # quantidade e preço
+                tk.Label(frame_prod, text=f"Quantidade: {prod.get_estoque()} | Preço: {prod.get_preco()}", font=("Arial", 12), fg="#cdd6f4", bg="#1e1e2e").pack()
+
+        
 
         # botao voltar
         tk.Button(
@@ -188,12 +285,24 @@ class App(tk.Tk):
         ).pack(pady=(0, 20)) 
 
 # - - - LISTA DE CLIENTES - - - 
+        if not self.mercado.lista_clientes:
+            label_vazio = tk.Label(
+                frame, text = "Nenhum cliente cadastrado",
+                font=("Arial", 12), fg="#a6adc8", bg="#1e1e2e"
+            )
+            label_vazio.pack(pady=20)
+        
+        else:
+            for cliente in self.mercado.lista_clientes:
+                # frame pra cada cliente
+                frame_cliente = tk.Frame(frame, bg="#1e1e2e")
+                frame_cliente.pack(pady=5)
 
-        label_vazio = tk.Label(
-            frame, text = "Nenhum cliente cadastrado",
-            font=("Arial", 12), fg="#a6adc8", bg="#1e1e2e"
-        )
-        label_vazio.pack(pady=20)
+                # nome
+                tk.Label(frame_cliente, text=f"Nome: {cliente.get_nome()}", font=("Arial", 12), fg="#cdd6f4", bg="#1e1e2e").pack()
+
+                # cpf, email, idade
+                tk.Label(frame_cliente, text=f"CPF: {cliente.get_cpf()} | Email: {cliente.email} | Idade: {cliente.idade}" , font=("Arial", 12), fg="#cdd6f4", bg="#1e1e2e").pack()
 
         # botao voltar
         tk.Button(
