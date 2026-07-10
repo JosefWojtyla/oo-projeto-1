@@ -62,7 +62,9 @@ Para testar todas as funcionalidades desenvolvidas nesta primeira entrega, siga 
    * Veja o extrato completo do seu carrinho e confirme o pagamento.
 6. **Deslogar (`Opção 6`)**:
    * Saia da conta para permitir que outro visitante utilize o terminal do mercado.
-7. **Testar Persistência (`Opção 0`)**:
+7. **Listar Clientes (`Opção 7`)**:
+   * Lista de Clientes cadastrados no sistema.
+8. **Testar Persistência (`Opção 0`)**:
    * Saia do sistema e inicie novamente (`python main.py`). Suas contas, produtos e itens no carrinho continuarão lá, salvos no arquivo JSON!
 
 ---
