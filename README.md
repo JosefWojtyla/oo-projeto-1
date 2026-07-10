@@ -30,9 +30,16 @@ python --version
    cd oo-projeto-1
    ```
 
-3. Execute o arquivo principal:
+3. Execute o sistema:
+
+   Para rodar no modo Terminal (linha de comando):
    ```bash
    python main.py
+   ```
+
+   Para rodar com a Interface Gráfica (novo):
+   ```bash
+   python app.py
    ```
 
 ---
@@ -64,6 +71,7 @@ Para testar todas as funcionalidades desenvolvidas nesta primeira entrega, siga 
 
 O sistema foi estruturado da seguinte maneira para facilitar a manutenção e leitura:
 * `main.py`: Ponto de entrada do sistema contendo a interface de usuário via Terminal.
+* `app.py`: Ponto de entrada do sistema contendo a Interface Gráfica nova.
 * `package/`: Pacote contendo as regras de negócio e modelagem.
   * `mercado.py`: Gerenciamento geral das listas de clientes e produtos.
   * `pessoa.py` e `cliente.py`: Representação dos usuários do sistema com Herança.
