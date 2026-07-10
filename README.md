@@ -84,4 +84,15 @@ O sistema foi estruturado da seguinte maneira para facilitar a manutenção e le
   * `persistencia.json`: Banco de dados em formato de texto onde as informações repousam enquanto o sistema está desligado.
 
 ---
+
+## Acessar Interface Gráfica
+Para rodar a interface gráfica, utilize o comando:
+```bash
+python app.py
+```
+
+---
 *Desenvolvido para a disciplina de Orientação a Objetos.*
+
+---
+
